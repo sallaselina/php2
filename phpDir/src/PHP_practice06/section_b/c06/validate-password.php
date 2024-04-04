@@ -25,9 +25,36 @@ Step 7: Message can be for example "Password is valid" or if not string
 "Password is not strong enough."
 
 */
+$password = "";
+$message = "";
+
+function checkPassword (string $password): bool {
+    if (mb_strlen($password) < 8) && preg_match('/[A-Z]/', $password) && preg_match('/[a-z]/', $password) && preg_match('/[0-9]/', $password)){
+        echo "Password too short";
+    }
+    if (preg_match('/[A-Z]/', $password) == 0) {
+        echo "Your password must contain an uppercase letter";
+}
+    if (preg_match('/[a-z]/', $password) == 0) {
+    echo "Your password must contain a lowercase letter";
+}
+    if (preg_match('/[0-9]/', $password) == 0) {
+    echo "Your password must contain a number";
+}
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $password = $_POST["password"];
+    $valid = checkPassword($password);
+    $valid = true ? $message = "Login successful" : $message = "Password not strong enough";
+}
 ?>
 <?php include 'includes/header.php'; ?>
 
-/* Write PHP code here */
-
+<form action="validate-password.php" method="post">
+ <p> Username: <input type="text" name="username"> </p>
+  <p> Password:  <input type="password" name="password"> </p>
+  <input type="submit" value="login">
+</form>
+<?=$message?>
 <?php include 'includes/footer.php'; ?>

@@ -21,7 +21,9 @@ $products = [
       <th>Price</th>
     </tr>
     <?php
-   foreach ()
+   foreach ($products as $candy => $price) {
+    echo "<tr> <td> $candy </td><td>$price</td></tr>";
+   }
     ?>
   </table>
 </body>

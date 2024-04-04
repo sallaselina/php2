@@ -1,8 +1,10 @@
 <?php
 
-/**
- * Write your code here
- */
+$candy = [
+  "Toffee" => ["price" => 3, "stock" => 12],
+  "Mints" => ["price" => 2, "stock" => 20],
+  "Chocolate" => ["price" => 4, "stock" => 15]
+]
 ?>
 <!DOCTYPE html>
 <html>

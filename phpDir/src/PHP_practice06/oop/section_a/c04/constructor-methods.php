@@ -34,6 +34,32 @@ Step 9: In the final row of the table, previous step is repeated using different
 
 */
 
+declare(strict_types=1);
+
+class Account {
+  public int $number;
+  public string $type;
+  public float $balance;
+  
+  function __construct($number, $type, float $balance = 0.00) {
+    $this->balance = $balance;
+    $this->type = $type;
+    $this->number = $number;
+    
+  }
+
+  function deposit(float $amount):float {
+    $this->balance+=$amount;
+    return $this->balance;
+  }
+
+  function withdraw(float $amount):float {
+    $this->balance-=$amount;
+    return $this->balance;
+  }
+}
+$savings = new Account(12345678, "savings", 500.0);
+$checking = new Account(98765432, "checking", 2980.40);
 ?>
 
 <?php include 'includes/header.php'; ?>
@@ -41,19 +67,29 @@ Step 9: In the final row of the table, previous step is repeated using different
 <table>
   <tr>
     <th>Date</th>
-
+    <th><?php echo $savings->type ?></th>
+    <th><?php echo $checking->type ?></th>
   </tr>
   <tr>
     <td>23 June</td>
-
+    <td><?php
+    echo $savings->balance ?></td>
+    <td><?php
+    echo $checking->balance ?>
   </tr>
   <tr>
     <td>24 June</td>
-
+    <td><?php $savings->deposit(50.00);
+    echo $savings->balance ?></td>
+    <td><?php $checking->withdraw(175.75);
+    echo $checking->balance ?>
   </tr>
   <tr>
     <td>25 June</td>
-
+    <td><?php $savings->deposit(125.50);
+    echo $savings->balance ?></td>
+    <td><?php $checking->withdraw(89.90);
+    echo $checking->balance ?>
   </tr>
 </table>
 <?php include 'includes/footer.php'; ?>

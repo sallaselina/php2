@@ -22,9 +22,11 @@
  */
 
 
-		?>
 
+		?>
 
   </article>
   <!--MAIN CONTENT-->
+  <form action="6.php" method="post">
+
   <?php include "includes/footer.php"; ?>

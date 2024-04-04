@@ -17,6 +17,16 @@ Step 3: Otherwise, simply display the form
 
 
 */
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $searchTerm = $_POST["searchTerm"];
+  echo "You searched for " . htmlspecialchars($searchTerm);
+} 
 ?>
+<form action="check-for-http-post.php" method="POST">
+<p> Search: <input type="search" name="searchTerm"></input>
+</p>
+<input type="submit" value="search">
+</form>
+
 
 <?php include 'includes/footer.php'; ?>

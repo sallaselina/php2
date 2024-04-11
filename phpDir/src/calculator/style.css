@@ -1,0 +1,22 @@
+body {
+  /*
+* Created with https://www.css-gradient.com
+* Gradient link: https://www.css-gradient.com/?c1=59926b&c2=64c3c3&gt=l&gd=dtl
+*/
+  background: #59926b;
+  background: linear-gradient(135deg, #59926b, #64c3c3);
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-align: center;
+}
+
+input {
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+form {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

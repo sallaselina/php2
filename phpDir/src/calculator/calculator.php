@@ -11,23 +11,30 @@ class Calculation {
     }
 
     function add($number1, $number2) {
-        return $number1 + $number2;
+        if ($number1 !== 0 || $number2 !== 0) {
+        return "$number1 + $number2 = " . $number1 + $number2;
     }
+}
 
     function subtract($number1, $number2) {
-        return $number1 - $number2;
+        if ($number1 !== 0 || $number2 !== 0) {
+        return "$number1 - $number2 = " . $number1 - $number2;
     }
+}
 
     function multiply($number1, $number2) {
-        return $number1 * $number2;
-
+        if ($number1 !== 0 || $number2 !== 0) {
+        return "$number1 * $number2 = " . $number1 * $number2;
+        }
     }
 
     function division($number1, $number2) {
-        return $number1 / $number2;
+        if ($number1 !== 0 || $number2 !== 0) {
+        return "$number1 / $number2 = " . $number1 / $number2;
+        }
     }
 }
-$first = new Calculation(3, 4);
+$first = new Calculation(0, 0);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $number1 = $_POST["number1"];
@@ -50,9 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1>PHP Calculator</h1>
     <form action="calculator.php" method="post">
     <p> Give two numbers: <br>
-    <input type="number" name="number1"> <br>
+    <input type="number" name="number1">
     <input type="number" name="number2">
-    <input type="submit" value="Calculate">
+    <input type="submit" value="Calculate" id="submit">
        </form>
    <h2>Addition</h2>
    <p> <?php echo $first->add($number1, $number2); ?>

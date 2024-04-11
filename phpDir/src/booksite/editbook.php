@@ -1,26 +1,28 @@
 <?php include 'db.php';
-
-if (isset($_POST["add-book"])) {
-    $id = $_POST["bookid"];
-    $title = $_POST["title"];
-    $author = $_POST["author"];
-    $year = $_POST["year"];
+$query = "SELECT * FROM books";
+$result = mysqli_query($conn, $query);
+if (!$result) {
+  die('Query failed');
+}
+if (isset($_POST['edit-book'])) {
+    $title = $_POST['title'];
+    $author = $_POST['author'];
+    $id = $_POST['bookid'];
     $genre = $_POST["genre"];
+    $year = $_POST["year"];
     $desc = $_POST["description"];
-
-    if (!empty($id) && !empty($title) && !empty($author) && !empty($genre) && !empty($desc)) {
-        $stmt = $conn->prepare("INSERT INTO books (id, title, author, publishing_year, genre, description) VALUES (?,?,?,?,?,?)");
-        $stmt->bind_param("ssssss", $id, $title, $author, $year, $genre, $desc);
-       if ($stmt->execute()) {
-        echo "Book added!";
-       } else {
-        die("Failed to add a book.");
-       }
-        $stmt->close();
-    } else {
-        echo "Please fill in all the fields.";
-    }
-    }
+  
+      $stmt = $conn->prepare("UPDATE books SET title = ?,  author = ?, genre = ?, year = ?, description = ? WHERE id = ?");
+      $stmt->bind_param("sssssi", $title, $author, $genre, $year, $desc, $id);
+      
+      if ($stmt->execute()) {
+        header("Location: " . $_SERVER["PHP_SELF"]);
+        exit;
+      } else {
+        die ("Failed to update data.");
+      }
+      $stmt->close();
+    }  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,8 +47,8 @@ if (isset($_POST["add-book"])) {
             </ul>
         </nav>
         <main>
-            <h2>Add a New Book</h2>
-            <form action="addbook.php" method="post">
+            <h2>Edit a Book</h2>
+            <form action="editbook.php" method="post">
                 <p>
                     <label for="bookid">ID:</label>
                     <input type="number" id="bookid" name="bookid">
@@ -81,7 +83,7 @@ if (isset($_POST["add-book"])) {
                     <label for="description">Description:</label><br>
                     <textarea rows="5" cols="100" id="description" name="description"></textarea>
                 </p>
-                <p><input type="submit" name="add-book" value="Add Book"></p>
+                <p><input type="submit" name="edit-book" value="Edit Book"></p>
             </form>
         </main>
     </div>    

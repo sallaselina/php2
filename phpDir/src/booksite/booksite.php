@@ -1,5 +1,10 @@
-<?php include 'db.php';
+<?php include "db.php";
 
+$result = $conn->query("SELECT * FROM books");
+$rows = array();
+while ($row = $result->fetch_assoc()) {
+    $rows[] = $row;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,56 +22,46 @@
         </header>
         <nav id="main-navi">
             <ul>
-                <li><a href="booksite.php">Home</a></li>
-                <li><a href="booksite.php?genre=Adventure">Adventure</a></li>
-                <li><a href="booksite.php?genre=Classic+Literature">Classic Literature</a></li>
-                <li><a href="booksite.php?genre=Coming-of-age">Coming-of-age</a></li>
-                <li><a href="booksite.php?genre=Fantasy">Fantasy</a></li>
-                <li><a href="booksite.php?genre=Historical+Fiction">Historical Fiction</a></li>
-                <li><a href="booksite.php?genre=Horror">Horror</a></li>
-                <li><a href="booksite.php?genre=Mystery">Mystery</a></li>
-                <li><a href="booksite.php?genre=Romance">Romance</a></li>
-                <li><a href="booksite.php?genre=Science+Fiction">Science Fiction</a></li>
+            <li><a href="booksite.php">Show All Books</a></li>
+                <li><a href="addbook.php">Add a New Book</a></li>
+                <li><a href="deletebook.php">Delete a Book</a></li>
+                <li><a href="editbook.php">Edit a Book</a></li>
             </ul>
         </nav>
         <main>
-            <?php
-            $json = file_get_contents("books.json");
-            $books = json_decode($json, true);
-
-                
-                if (isset($_GET["genre"])) { ?>
-                    <h2>Genre: <?php print $_GET["genre"]?></h2>
-                    <?php }
-                    else { ?>
-                    <h2>All books</h2>
-                   <?php }
-
-            foreach ($books as $book) {
-                if (isset($_COOKIE["favorite"])) {
-                $favorites = explode(",", $_COOKIE["favorite"]);
-             }   else {
-                $favorites = [];
-                }
-                $isFavorited = in_array($book['id'], $favorites); // checking if the book id is in the favorites array
-            
-                if ((!isset($_GET['genre']) || $_GET['genre'] === $book['genre'])) { ?> 
-               <!--  if the genre has not been chosen, show all  
-                OR the chosen genre matches the books genre, show the books in the chosen genre -->
-                    <section class="book"> <?php
-                    echo '<a class="bookmark fa ' . ($isFavorited ? 'fa-star' : 'fa-star-o') . '" href="setfavorite.php?id=' . $book["id"] . '"></a>';?>
-                    <h3> <?php echo $book["title"] ?></h3>
-                    <p class="publishing-info">
-                    <span class="author"><?php echo $book["author"]?></span> 
-                    <span class="year"><?php echo $book["publishing_year"]?></span>
-                    </p>
-                    <p class="description"> <?php echo $book["description"]?> </p>
-                    </section> <?php
-                }
-    }
-            ?>
-            </section>
-
+        <h2>All books</h2>
+        <table class="book">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publishing Year</th>
+        <th>Description</th>
+        <th>Genre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if ($result->num_rows > 0) : ?>
+        <?php foreach ($result as $row) : ?>
+    <tr data-id="<?= $row["id"]?>">
+<td><?=$row["id"]?></td>
+<td><?= $row["title"] ?></td>
+<td class="author"><?= $row["author"]?></td>
+<td class="year"><?= $row["publishing_year"]?></td>
+<td class="description"><?= $row["description"]?></td>
+<td><?= $row["genre"]?></td>
+</tr>
+<?php endforeach; ?>
+<?php else : ?>
+    <tr>
+        <td colspan='4'>
+        No results.
+        </td>
+    </tr>
+    <?php endif;?>
+    </tbody>
+</table>
         </main>
     </div>    
 </body>

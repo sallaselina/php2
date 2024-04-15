@@ -1,24 +1,26 @@
 <?php include 'db.php';
 
+$msg= "";
+$error_msg ="";
+
 if (isset($_POST["add-book"])) {
-    $id = $_POST["bookid"];
     $title = $_POST["title"];
     $author = $_POST["author"];
     $year = $_POST["year"];
     $genre = $_POST["genre"];
     $desc = $_POST["description"];
 
-    if (!empty($id) && !empty($title) && !empty($author) && !empty($genre) && !empty($desc)) {
-        $stmt = $conn->prepare("INSERT INTO books (id, title, author, publishing_year, genre, description) VALUES (?,?,?,?,?,?)");
-        $stmt->bind_param("ssssss", $id, $title, $author, $year, $genre, $desc);
+    if (!empty($title) && !empty($author) && !empty($genre) && !empty($desc)) {
+        $stmt = $conn->prepare("INSERT INTO books (title, author, publishing_year, genre, description) VALUES (?,?,?,?,?)");
+        $stmt->bind_param("sssss", $title, $author, $year, $genre, $desc);
        if ($stmt->execute()) {
-        echo "Book added!";
+        $msg = "Book added!";
        } else {
         die("Failed to add a book.");
        }
         $stmt->close();
     } else {
-        echo "Please fill in all the fields.";
+        $error_msg = "Please fill in all the fields.";
     }
     }
 ?>
@@ -46,11 +48,9 @@ if (isset($_POST["add-book"])) {
         </nav>
         <main>
             <h2>Add a New Book</h2>
+            <?=$error_msg?>
             <form action="addbook.php" method="post">
-                <p>
-                    <label for="bookid">ID:</label>
-                    <input type="number" id="bookid" name="bookid">
-                </p>
+            
                 <p>
                     <label for="title">Title:</label>
                     <input type="text" id="title" name="title">
@@ -83,6 +83,7 @@ if (isset($_POST["add-book"])) {
                 </p>
                 <p><input type="submit" name="add-book" value="Add Book"></p>
             </form>
+            <?=$msg; ?>
         </main>
     </div>    
 </body>

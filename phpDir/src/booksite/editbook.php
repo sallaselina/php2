@@ -1,23 +1,23 @@
 <?php include 'db.php';
+$msg = "";
 $query = "SELECT * FROM books";
 $result = mysqli_query($conn, $query);
 if (!$result) {
   die('Query failed');
 }
+
 if (isset($_POST['edit-book'])) {
     $title = $_POST['title'];
     $author = $_POST['author'];
-    $id = $_POST['bookid'];
-    $genre = $_POST["genre"];
-    $year = $_POST["year"];
-    $desc = $_POST["description"];
+    $year = $_POST['year'];
+    $genre = $_POST['genre'];
+    $desc = $_POST['description'];
   
-      $stmt = $conn->prepare("UPDATE books SET title = ?,  author = ?, genre = ?, year = ?, description = ? WHERE id = ?");
-      $stmt->bind_param("sssssi", $title, $author, $genre, $year, $desc, $id);
+      $stmt = $conn->prepare("UPDATE books SET author = ?, genre = ?, publishing_year = ?, description = ? WHERE title = ?");
       
+      $stmt->bind_param("sssss", $author, $genre, $year, $desc, $title);
       if ($stmt->execute()) {
-        header("Location: " . $_SERVER["PHP_SELF"]);
-        exit;
+        $msg = "Book updated!";
       } else {
         die ("Failed to update data.");
       }
@@ -48,15 +48,16 @@ if (isset($_POST['edit-book'])) {
         </nav>
         <main>
             <h2>Edit a Book</h2>
+            <h3>Select which book you want to edit</h3>
             <form action="editbook.php" method="post">
-                <p>
-                    <label for="bookid">ID:</label>
-                    <input type="number" id="bookid" name="bookid">
-                </p>
-                <p>
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title">
-                </p>
+            <select name="title" id="title">
+      <?php
+      while ($row = mysqli_fetch_assoc($result)) {
+        $title = $row['title'];
+        echo "<option value='$title'>$title</option>";
+      }
+      ?>
+      <br>
                 <p>
                     <label for="author">Author:</label>
                     <input type="text" id="author" name="author">
@@ -85,6 +86,7 @@ if (isset($_POST['edit-book'])) {
                 </p>
                 <p><input type="submit" name="edit-book" value="Edit Book"></p>
             </form>
+            <?=$msg ?>
         </main>
     </div>    
 </body>

@@ -1,4 +1,5 @@
 <?php include 'db.php';
+$msg = "";
 $query = "SELECT * FROM books";
 $result = mysqli_query($conn, $query);
 if (!$result) {
@@ -11,8 +12,6 @@ if (isset($_POST['delete-book'])) {
   $stmt->bind_param("s", $title);
   if ($stmt->execute()) {
     $msg = "Book deleted!";
-    header("Location: " . $_SERVER["PHP_SELF"]);
-    exit;
   } else {
     die ("Failed to delete book");
   }
@@ -56,7 +55,7 @@ if (isset($_POST['delete-book'])) {
       
                 <p><input type="submit" name="delete-book" value="Delete Book"></p>
             </form>
-           <p> <?php echo $msg ?> </p>
+           <p> <?= $msg ?> </p>
         </main>
     </div>    
 </body>

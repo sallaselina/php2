@@ -42,7 +42,7 @@ if (isset($_POST['delete-book'])) {
             </ul>
         </nav>
         <main>
-            <h2>Select the title and id of the book to be deleted</h2>
+            <h2>Select the title of the book to be deleted</h2>
             <form action="deletebook.php" method="post">
             <select name="title" id="title">
       <?php
@@ -53,14 +53,7 @@ if (isset($_POST['delete-book'])) {
   
       ?>
     </select>
-    <select name ="id" id="bookid">
-      <?php
-    while ($row = mysqli_fetch_assoc($result)) {
-        $id = $row['id'];
-        echo "<option value='$id'>$id</option>";
-      }
-      ?>
-    </select>
+   
       
                 <p><input type="submit" name="delete-book" value="Delete Book"></p>
             </form>

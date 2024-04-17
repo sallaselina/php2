@@ -57,7 +57,7 @@ if (isset($_POST['edit-book'])) {
         echo "<option value='$title'>$title</option>";
       }
       ?>
-      <br>
+      </select>
                 <p>
                     <label for="author">Author:</label>
                     <input type="text" id="author" name="author">

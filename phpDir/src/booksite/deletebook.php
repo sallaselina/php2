@@ -8,8 +8,8 @@ if (!$result) {
 
 if (isset($_POST['delete-book'])) {
   $title = $_POST['title'];
-  $stmt = $conn->prepare("DELETE FROM books where title = ? and id = ?");
-  $stmt->bind_param("ss", $title, $id);
+  $stmt = $conn->prepare("DELETE FROM books where title = ?");
+  $stmt->bind_param("s", $title);
   if ($stmt->execute()) {
     $msg = "Book deleted!";
   } else {

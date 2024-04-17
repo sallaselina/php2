@@ -1,4 +1,6 @@
-<?php include "functions.php"; ?>
+<?php include "functions.php"; 
+session_start();
+?>
 <?php include "includes/header.php"; ?>
 <section class="content">
 

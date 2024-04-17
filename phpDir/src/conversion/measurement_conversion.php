@@ -28,12 +28,14 @@ function GtoKg (float $g): float {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
     <title>Measurement conversion</title>
 </head>
 <body>
     <h1>Measurement conversion</h1>        
    <form action="measurement_conversion.php" method="post">
-        <h2>Temperature</h2>
+   <div class="box">     
+   <h2>Temperature</h2>
         <input type="number" value="Temperature" name="temp"> 
         <input type="submit" value="Submit">
             <h3>Celsius to Fahrenheit</h3>
@@ -43,6 +45,7 @@ function GtoKg (float $g): float {
             }
         }
              ?>
+             
             <h3>Celsius to Kelvin</h3>
             <?php if ($_SERVER["REQUEST_METHOD"]=="POST") {
                 if (!empty($_POST["temp"])) {
@@ -50,6 +53,8 @@ function GtoKg (float $g): float {
             }
         }
              ?>
+             </div>
+             <div class="box">
         <h2>Speed</h2>
         <input type="number" value="Speed" name="speed">
         <input type="submit" value="Submit">
@@ -67,6 +72,8 @@ function GtoKg (float $g): float {
             }
         }
             ?>
+            </div>
+            <div class="box">
         <h2>Mass</h2>
         <input type="number" value="Mass" name="mass"> 
         <input type="submit" value="Submit">
@@ -84,6 +91,7 @@ function GtoKg (float $g): float {
             }
         }
             ?>
+            </div>
 </form>
     
 </body>

@@ -8,8 +8,8 @@ if (!$result) {
 
 if (isset($_POST['delete-book'])) {
   $title = $_POST['title'];
-  $stmt = $conn->prepare("DELETE FROM books where title = ?");
-  $stmt->bind_param("s", $title);
+  $stmt = $conn->prepare("DELETE FROM books where title = ? and id = ?");
+  $stmt->bind_param("ss", $title, $id);
   if ($stmt->execute()) {
     $msg = "Book deleted!";
   } else {
@@ -42,13 +42,22 @@ if (isset($_POST['delete-book'])) {
             </ul>
         </nav>
         <main>
-            <h2>Select the title of the book to be deleted</h2>
+            <h2>Select the title and id of the book to be deleted</h2>
             <form action="deletebook.php" method="post">
             <select name="title" id="title">
       <?php
       while ($row = mysqli_fetch_assoc($result)) {
         $title = $row['title'];
         echo "<option value='$title'>$title</option>";
+      }
+  
+      ?>
+    </select>
+    <select name ="id" id="bookid">
+      <?php
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id = $row['id'];
+        echo "<option value='$id'>$id</option>";
       }
       ?>
     </select>

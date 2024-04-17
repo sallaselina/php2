@@ -20,13 +20,20 @@
 
 
  */
+if (isset($_POST["email"])) {
+  $email = $_POST["email"];
+  echo $email;
+}
 
 
 
 		?>
 
-  </article>
+ 
   <!--MAIN CONTENT-->
   <form action="6.php" method="post">
+    <input type="text" name="email">
+</form>
+</article>
 
   <?php include "includes/footer.php"; ?>

@@ -2,10 +2,12 @@
 $longURL = "";
 $showLongURL = "";
 $message = "";
+// store the accessToken securely!! .gitignore .env
+// environmental variable in github?
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $url = "https://unelma.io/api/v1/link";
-    $accessToken = "9|cDy9qXvlnVEnp4h1pWOHgSrze3IIaMfZisR5zHBh8b79edbf";
+    $accessToken = "";
     $longURL = $_POST["longurl"];
     if (!empty($longURL)){
     $showLongURL = "You entered: " . $longURL;}

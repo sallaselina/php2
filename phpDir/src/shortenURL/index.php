@@ -1,13 +1,14 @@
-<?php 
+<?php
+require __DIR__ . "/vendor/autoload.php";
+Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/')->load();
+
 $longURL = "";
 $showLongURL = "";
 $message = "";
-// store the accessToken securely!! .gitignore .env
-// environmental variable in github?
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $url = "https://unelma.io/api/v1/link";
-    $accessToken = "";
+    $accessToken = getenv("ACCESS_TOKEN");
     $longURL = $_POST["longurl"];
     if (!empty($longURL)){
     $showLongURL = "You entered: " . $longURL;}
